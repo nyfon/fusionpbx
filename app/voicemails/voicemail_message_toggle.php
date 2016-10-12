@@ -47,10 +47,10 @@ else {
 		require_once "resources/classes/voicemail.php";
 		foreach ($voicemail_messages as $voicemail_uuid => $voicemail_message_uuids) {
 			foreach ($voicemail_message_uuids as $voicemail_message_uuid) {
-				$voicemail = new voicemail;
+				$voicemail = new voicemail($voicemail_uuid);
 				$voicemail->db = $db;
 				$voicemail->domain_uuid = $_SESSION['domain_uuid'];
-				$voicemail->voicemail_uuid = check_str($voicemail_uuid);
+				//$voicemail->voicemail_uuid = check_str($voicemail_uuid);
 				$voicemail->voicemail_message_uuid = check_str($voicemail_message_uuid);
 				$result = $voicemail->message_toggle();
 				unset($voicemail);
