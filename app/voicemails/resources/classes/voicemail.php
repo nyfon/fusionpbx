@@ -36,7 +36,7 @@
 		public $order;
 		public $app_uuid;
 
-		public function __construct() {
+		public function __construct($voicemail_uuid = null) {
 			//connect to the database if not connected
 				if (!$this->db) {
 					require_once "resources/classes/database.php";
@@ -52,12 +52,18 @@
 				if (strlen($this->domain_uuid) == 0) {
 					$this->domain_uuid = $_SESSION['domain_uuid'];
 				}
-
+			//set the voicemail_uuid if not provided
+				if (strlen($this->voicemail_uuid) == 0) {
+					$this->voicemail_uuid = $voicemail_uuid;
+				}
 			//get the voicemail_id
 				if (!isset($this->voicemail_id)) {
 					$sql = "select voicemail_id from v_voicemails ";
 					$sql .= "where domain_uuid = '".$this->domain_uuid."' ";
-					$sql .= "and voicemail_uuid = '".$this->voicemail_uuid."' ";
+					//dashboard doesn't pass the voicemail_uuid which makes sence
+					if (strlen($this->voicemail_uuid) != 0) {
+						$sql .= "and voicemail_uuid = '".$this->voicemail_uuid."' ";
+					}
 					$prep_statement = $this->db->prepare(check_sql($sql));
 					$prep_statement->execute();
 					$result = $prep_statement->fetchAll(PDO::FETCH_NAMED);
