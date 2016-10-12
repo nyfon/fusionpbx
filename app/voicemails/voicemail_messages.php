@@ -54,11 +54,11 @@ if (!(check_str($_REQUEST["action"]) == "download" && check_str($_REQUEST["src"]
 		$voicemail_id = check_str($_REQUEST["id"]);
 		$voicemail_uuid = check_str($_REQUEST["voicemail_uuid"]);
 		if ($voicemail_message_uuid != '' && $voicemail_id != '' && $voicemail_uuid != '') {
-			$voicemail = new voicemail;
+			$voicemail = new voicemail($voicemail_uuid);
 			$voicemail->db = $db;
 			$voicemail->domain_uuid = $_SESSION['domain_uuid'];
 			$voicemail->voicemail_id = $voicemail_id;
-			$voicemail->voicemail_uuid = $voicemail_uuid;
+			//$voicemail->voicemail_uuid = $voicemail_uuid;
 			$voicemail->voicemail_message_uuid = $voicemail_message_uuid;
 			$result = $voicemail->message_download();
 			unset($voicemail);
