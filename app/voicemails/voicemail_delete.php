@@ -47,10 +47,10 @@ else {
 			if ($voicemail_uuid != '') {
 				//delete voicemail messages
 					require_once "resources/classes/voicemail.php";
-					$voicemail = new voicemail;
+					$voicemail = new voicemail($voicemail_uuid);
 					$voicemail->db = $db;
 					$voicemail->domain_uuid = $_SESSION['domain_uuid'];
-					$voicemail->voicemail_uuid = $voicemail_uuid;
+					//$voicemail->voicemail_uuid = $voicemail_uuid;
 					$result = $voicemail->voicemail_delete();
 					unset($voicemail);
 			}
